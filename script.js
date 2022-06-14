@@ -66,8 +66,17 @@ function createPin(){
 }
 
 form.addEventListener('submit', function(e){
+    //clear input fields
+    inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
+
     //display marker
     e.preventDefault();
     createPin();
+
+})
+
+inputType.addEventListener('change', function(){
+    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
 
 })
