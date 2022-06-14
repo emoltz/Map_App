@@ -1,4 +1,5 @@
 'use strict';
+import leaflet from "leaflet";
 
 // prettier-ignore
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -18,7 +19,7 @@ navigator.geolocation.getCurrentPosition(
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
-        console.log(latitude, longitude);
+        console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
 
     },
     function () {
