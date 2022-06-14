@@ -126,6 +126,7 @@ a:visited {
     /* Match height and activity boxes */
     height: 9.25rem;
     transition: all 0.5s, transform 1ms;
+    transition-timing-function: ease-in;
 }
 
 .form.hidden {
@@ -212,9 +213,9 @@ a:visited {
     background-color: var(--color-dark--1);
 }
 
-.running-popup .leaflet-popup-content-wrapper {
+.normal-walk-popup .leaflet-popup-content-wrapper {
     border-left: 5px solid var(--color-brand--2);
 }
-.cycling-popup .leaflet-popup-content-wrapper {
+.long-walk-popup .leaflet-popup-content-wrapper {
     border-left: 5px solid var(--color-brand--1);
 }
