@@ -62,6 +62,7 @@ class App{
         this.#mapEvent = mapE;
         form.classList.remove('hidden');
         inputDistance.focus();
+        document.querySelector(".begin-text").classList.add("hidden");
     }
 
     _toggleElevationField(){
