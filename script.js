@@ -171,7 +171,8 @@ class App {
     }
 
     renderWorkoutMarker(workout){
-        L.marker(this.currCoords).addTo(this.#map).bindPopup(L.popup({
+        //this.currCords...?
+        L.marker(workout.coords).addTo(this.#map).bindPopup(L.popup({
             maxWidth: 250,
             minWidth: 100,
             autoClose: false,
