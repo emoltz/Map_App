@@ -16,11 +16,14 @@ const inputElevation = document.querySelector('.form__input--elevation');
 const zoomLevel = 15;
 
 
+
+
 class Workout{
 
     constructor(coords, distance, duration){
         this._date = new Date();
-        this._id = (new Date() + '').slice(-10); //include library!
+        const rand = Math.trunc(Math.random() * 100 + 1);
+        this._id = (new Date.now() + '').slice(-10) + rand; //gives unique number
 
         this._coords = coords;
         this._distance = distance;
@@ -57,7 +60,8 @@ class Cycling extends Workout{
     }
 }
 
-
+////////////////////////////////////////////////////////////
+//APP ARCHITECTURE
 class App{
     #map;
     #mapEvent;
