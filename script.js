@@ -15,10 +15,50 @@ const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 const zoomLevel = 15;
 
-// let map, mapEvent;
+
+class Workout{
+
+    constructor(coords, distance, duration){
+        this._date = new Date();
+        this._id = (new Date() + '').slice(-10); //include library!
+
+        this._coords = coords;
+        this._distance = distance;
+        this._duration = duration;
+    }
+}
+//wrote this on ipad!
+
+class Running extends Workout{
+    constructor(coords, distance, duration, cadence) {
+        super(coords, distance, duration);
+        this.cadence = cadence;
+
+        this.calcPace();
+    }
+
+    calcPace(){
+        // min/miles
+
+        this._pace = this._duration / this._distance;
+        return this._pace;
+    }
+}
+class Cycling extends Workout{
+    constructor(coords, distance, duration, elevationGain) {
+        super(coords, distance, duration);
+        this.elevationGain = elevationGain;
+        this.calcSpeed();
+    }
+
+    calcSpeed(){
+        this._speed = this._distance / (this._duration / 60);
+        return this._speed;
+    }
+}
+
 
 class App{
-
     #map;
     #mapEvent;
 
