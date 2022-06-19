@@ -65,7 +65,7 @@ class App {
     #map;
     #mapEvent;
     #workouts = [];
-
+    currCords = [];
     constructor() {
         this._getPosition();
 
@@ -124,6 +124,7 @@ class App {
 
         //get data from form
         const {lat, lng} = this.#mapEvent.latlng;
+        this.currCoords = [lat, lng];
         const type = inputType.value;
         const distance = +inputDistance.value;
         const duration = +inputDuration.value;
@@ -159,14 +160,18 @@ class App {
 
         // Render workout on the list
 
+
         //hide the form and...
         //clear input fields
         inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
 
         //display marker
+        this.renderWorkoutMarker(workout);
 
-        const currCoords = [lat, lng];
-        L.marker(currCoords).addTo(this.#map).bindPopup(L.popup({
+    }
+
+    renderWorkoutMarker(workout){
+        L.marker(this.currCoords).addTo(this.#map).bindPopup(L.popup({
             maxWidth: 250,
             minWidth: 100,
             autoClose: false,
@@ -174,7 +179,7 @@ class App {
             // className: `normal-walk-popup`,
             className: `${type}-popup}`
         }))
-            .setPopupContent('New Popup')
+            .setPopupContent(workout.distance)
             .openPopup();
     }
 
