@@ -1,50 +1,57 @@
 'use strict';
 
-// prettier-ignore
+//____________________________ELEMENTS
 
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+class Workout {
 
-
-//_____________________________________________ELEMENTS
-
-const zoomLevel = 15;
-
-
-class Workout{
-
-    constructor(coords, distance, duration){
+    constructor(coords, distance, duration) {
         this._id = Math.trunc(Math.random() * 1000000 + 1);
 
         this._coords = coords;
         this._distance = distance;
         this._duration = duration;
     }
+
+    _setDescription() {
+        // prettier-ignore
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        this._description = `${this._type[0].toUpperCase()} ${this._type.slice(1)} on ${months[this.date.getMonth()]} ${this.date.getDate()}`;
+    }
+
 }
+
 //wrote this on ipad!
 
-class Running extends Workout{
+class Running extends Workout {
+    _type = 'running';
+
     constructor(coords, distance, duration, cadence) {
         super(coords, distance, duration);
         this.cadence = cadence;
 
         this.calcPace();
+        this._setDescription();
     }
 
-    calcPace(){
+    calcPace() {
         // min/miles
 
         this._pace = this._duration / this._distance;
         return this._pace;
     }
 }
-class Cycling extends Workout{
+
+class Cycling extends Workout {
+    _type = 'cycling';
+
     constructor(coords, distance, duration, elevationGain) {
         super(coords, distance, duration);
-        this.elevationGain = elevationGain;
+        this._elevationGain = elevationGain;
         this.calcSpeed();
+        this._setDescription();
     }
 
-    calcSpeed(){
+    calcSpeed() {
         this._speed = this._distance / (this._duration / 60);
         return this._speed;
     }
@@ -66,6 +73,7 @@ class App {
     #mapEvent;
     #workouts = [];
     currCords = [];
+
     constructor() {
         this._getPosition();
 
@@ -83,6 +91,7 @@ class App {
     }
 
     _loadMap(position) {
+        const zoomLevel = 15;
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
@@ -157,6 +166,7 @@ class App {
         this.#workouts.push(workout);
 
         //render workout on map as marker
+        this._renderWorkout(workout);
 
         // Render workout on the list
 
@@ -166,11 +176,58 @@ class App {
         inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
 
         //display marker
-        this.renderWorkoutMarker(workout);
+        this._renderWorkoutMarker(workout);
 
     }
 
-    renderWorkoutMarker(workout){
+    _renderWorkout(workout) {
+        let html = `
+            <li class="workout ${workout._type}--running" data-id="${workout._id}">
+             <h2 class="workout__title">${workout._description}</h2>
+              <div class="workout__details">
+                <span class="workout__icon">${workout._type === 'running' ? '🏃' : '‍🚴‍️'}‍️</span>
+                <span class="workout__value">${workout._distance}</span>
+                <span class="workout__unit">km</span>
+              </div>
+              <div class="workout__details">
+                 <span class="workout__icon">⏱</span>
+                <span class="workout__value">${workout._duration}</span>
+                <span class="workout__unit">min</span>
+              </div>
+        `;
+
+        if (workout._type === 'running'){
+            html += `
+            <div class="workout__details">
+                <span class="workout__icon">⚡️</span>
+                <span class="workout__value">${workout._pace.toFixed(1)}</span>
+                <span class="workout__unit">min/km</span>
+          </div>
+          <div class="workout__details">
+                <span class="workout__icon">🦶🏼</span>
+                <span class="workout__value">${workout.cadence}</span>
+                <span class="workout__unit">spm</span>
+            </div>
+            </li>
+        `;
+        }
+
+        if(workout._type === 'cycling'){
+            html += `
+            <div class="workout__details">
+            <span class="workout__icon">⚡️</span>
+            <span class="workout__value">${workout._speed.toFixed(1)}</span>
+            <span class="workout__unit">km/h</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">⛰</span>
+            <span class="workout__value">${workout._elevationGain}</span>
+            <span class="workout__unit">m</span>
+          </div>`
+        }
+    }
+
+    _renderWorkoutMarker(workout) {
         //this.currCords...?
         L.marker(workout.coords).addTo(this.#map).bindPopup(L.popup({
             maxWidth: 250,
@@ -187,13 +244,12 @@ class App {
 }
 
 
-function clickError(){
+function clickError() {
     alert("Could not get position");
 }
 
 
-
-inputType.addEventListener('change', function(){
+inputType.addEventListener('change', function () {
     inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
     inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
 
