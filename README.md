@@ -4,8 +4,10 @@
 Simple geo/map app for javascript practice. https://emoltz.github.io/WalkPal/
 
 ## Blog
-### June 2022
+### Up to June 19, 2022
 <p>
+This is an exercise in using Javascript to manipulate HTML to get dynamic website pages.
+
 Currently, I am using the Leaflet Library to render the map, and then using those pre-built objects to link to my back-end.
 </p>
 <p>
@@ -14,3 +16,9 @@ The back-end consists of objects that take input data from the user and use it t
 <p>
 Scope has currently been my challenge -- I started with a much narrower idea of how things would work in the back end and then had to refactor the code into appropriate classes, which broke some things. So I am working on fixing those loose ends now.
 I'm still refactoring everything to make sure everything is very organized and neat.</p>
+
+### June 20, 2022
+
+Working on adding functionality that, when the map is clicked, more DOM manipulation happens and adds more walks to the left hand side column. I'm just using "cycling" and "running" as placeholders for now, since I am following along with a tutorial for this part, but I will refactor it later.
+ThiS is the point where my C++ education fails me: Javascript doesn't support abstract classes, so I am nervous that the inheritance I am attempting to do won't quite work. But I'm positive that it *can* work, it may not be in the way I think. 
+
