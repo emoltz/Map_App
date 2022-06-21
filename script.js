@@ -14,13 +14,12 @@ class Workout {
         this._duration = duration;
         this._hour = this._date.getHours();
         this._time = "";
-        if(this._hour >=12){
+        if (this._hour >= 12) {
             this._timeOfDay = "PM";
-            if(this._hour !== 12){
+            if (this._hour !== 12) {
                 this._time += this._hour - 12;
             }
-        }
-        else{
+        } else {
             this._timeOfDay = "AM";
         }
         this._time += ":" + this._date.getMinutes() + " " + this._timeOfDay;
@@ -135,7 +134,7 @@ class App {
         document.querySelector(".begin-text").classList.add("hidden");
     }
 
-    _hideForm(){
+    _hideForm() {
         //Empty inputs
         inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
         //add hidden class back on
