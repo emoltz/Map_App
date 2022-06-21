@@ -22,3 +22,6 @@ I'm still refactoring everything to make sure everything is very organized and n
 Working on adding functionality that, when the map is clicked, more DOM manipulation happens and adds more walks to the left hand side column. I'm just using "cycling" and "running" as placeholders for now, since I am following along with a tutorial for this part, but I will refactor it later.
 ThiS is the point where my C++ education fails me: Javascript doesn't support abstract classes, so I am nervous that the inheritance I am attempting to do won't quite work. But I'm positive that it *can* work, it may not be in the way I think. 
 
+### June 21, 2022
+
+Having an issue with string literals in Javascript... but it's due to my futzing around with the CSS class names and variable names. Should be all figured out now. 

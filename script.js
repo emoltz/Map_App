@@ -15,7 +15,7 @@ class Workout {
     _setDescription() {
         // prettier-ignore
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        this._description = `${this._type[0].toUpperCase()} ${this._type.slice(1)} on ${months[this.date.getMonth()]} ${this.date.getDate()}`;
+        this._description = `${this._type[0].toUpperCase()}${this._type.slice(1)}`;
     }
 
 }
@@ -94,7 +94,7 @@ class App {
         const zoomLevel = 15;
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
+        // console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
         const URL = `https://www.google.com/maps/@${latitude},${longitude}`;
         const coords = [latitude, longitude];
         this.#map = L.map('map').setView(coords, zoomLevel);
@@ -223,19 +223,22 @@ class App {
             <span class="workout__icon">⛰</span>
             <span class="workout__value">${workout._elevationGain}</span>
             <span class="workout__unit">m</span>
-          </div>`
+          </div>`;
         }
+        form.insertAdjacentHTML(`afterend`, html);
     }
 
     _renderWorkoutMarker(workout) {
         //this.currCords...?
-        L.marker(workout.coords).addTo(this.#map).bindPopup(L.popup({
+        L.marker(workout._coords)
+            .addTo(this.#map)
+            .bindPopup(L.popup({
             maxWidth: 250,
             minWidth: 100,
             autoClose: false,
-            // closeOnClick: false,
-            // className: `normal-walk-popup`,
-            className: `${type}-popup}`
+            closeOnClick: false,
+            className: `normal-walk-popup`,
+            // className: `${workout._type}-popup`,
         }))
             .setPopupContent(workout.distance)
             .openPopup();
