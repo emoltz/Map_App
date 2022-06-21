@@ -135,6 +135,17 @@ class App {
         document.querySelector(".begin-text").classList.add("hidden");
     }
 
+    _hideForm(){
+        //Empty inputs
+        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
+        //add hidden class back on
+        form.style.display = 'none';
+        form.classList.add('hidden');
+        setTimeout(
+            () => (form.style.display = 'grid'), 1000
+        );
+    }
+
     _toggleElevationField() {
 
     }
@@ -189,9 +200,7 @@ class App {
 
 
         //hide the form and...
-        //clear input fields
-        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
-
+        this._hideForm();
         //display marker
         this._renderWorkoutMarker(workout);
 
@@ -257,7 +266,7 @@ class App {
                 className: `normal-walk-popup`,
                 // className: `${workout._type}-popup`,
             }))
-            .setPopupContent(workout.distance)
+            .setPopupContent("Popup Text")
             .openPopup();
     }
 
