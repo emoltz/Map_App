@@ -3,19 +3,36 @@
 //____________________________ELEMENTS
 
 class Workout {
+    _date = new Date();
+
 
     constructor(coords, distance, duration) {
         this._id = Math.trunc(Math.random() * 1000000 + 1);
-
+        this._description = "NULL";
         this._coords = coords;
         this._distance = distance;
         this._duration = duration;
+        this._hour = this._date.getHours();
+        this._time = "";
+        if(this._hour >=12){
+            this._timeOfDay = "PM";
+            if(this._hour !== 12){
+                this._time += this._hour - 12;
+            }
+        }
+        else{
+            this._timeOfDay = "AM";
+        }
+        this._time += ":" + this._date.getMinutes() + " " + this._timeOfDay;
+
     }
 
     _setDescription() {
         // prettier-ignore
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        this._description = `${this._type[0].toUpperCase()}${this._type.slice(1)}`;
+        this._description = `${this._type[0].toUpperCase()}${this._type.slice(1)} on ${
+            months[this._date.getMonth()]
+        } ${this._date.getDate()} at ${this._time}`;
     }
 
 }
@@ -196,7 +213,7 @@ class App {
               </div>
         `;
 
-        if (workout._type === 'running'){
+        if (workout._type === 'running') {
             html += `
             <div class="workout__details">
                 <span class="workout__icon">⚡️</span>
@@ -212,7 +229,7 @@ class App {
         `;
         }
 
-        if(workout._type === 'cycling'){
+        if (workout._type === 'cycling') {
             html += `
             <div class="workout__details">
             <span class="workout__icon">⚡️</span>
@@ -233,13 +250,13 @@ class App {
         L.marker(workout._coords)
             .addTo(this.#map)
             .bindPopup(L.popup({
-            maxWidth: 250,
-            minWidth: 100,
-            autoClose: false,
-            closeOnClick: false,
-            className: `normal-walk-popup`,
-            // className: `${workout._type}-popup`,
-        }))
+                maxWidth: 250,
+                minWidth: 100,
+                autoClose: false,
+                closeOnClick: false,
+                className: `normal-walk-popup`,
+                // className: `${workout._type}-popup`,
+            }))
             .setPopupContent(workout.distance)
             .openPopup();
     }
