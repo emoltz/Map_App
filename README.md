@@ -30,3 +30,4 @@ ThiS is the point where my C++ education fails me: Javascript doesn't support ab
 
 ### June 22, 2022
 * Mostly done... I wanted to some more with it but I think I've learned what I needed to learn to move on. I will return to this at some point to polish it a bit if needed. 
+* I also added local storage functionality. 
