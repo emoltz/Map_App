@@ -96,11 +96,13 @@ class App {
 
     constructor() {
         this._getPosition();
+        this._getLocalStorage();
 
         form.addEventListener('submit', this._newWorkout.bind(this));
         inputType.addEventListener('change', this._toggleElevationField);
 
         // containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+
     }
 
     _moveToPopup(e) {
@@ -230,6 +232,8 @@ class App {
         //display marker
         this._renderWorkoutMarker(workout);
 
+        this._setLocalStorage();
+
     }
 
     _renderWorkout(workout) {
@@ -295,13 +299,24 @@ class App {
             .setPopupContent("Popup Text")
             .openPopup();
     }
+    _setLocalStorage() {
+        localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+    }
+
+    _getLocalStorage() {
+        const data = JSON.parse(localStorage.getItem('workouts'));
+
+        if (!data) return;
+
+        this.#workouts = data;
+
+        this.#workouts.forEach(work => {
+            this._renderWorkout(work);
+        });
+    }
 
 }
 
-
-function clickError() {
-    alert("Could not get position");
-}
 
 
 inputType.addEventListener('change', function () {
