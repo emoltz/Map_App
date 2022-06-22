@@ -27,3 +27,6 @@ ThiS is the point where my C++ education fails me: Javascript doesn't support ab
 * Having an issue with string literals in Javascript... but it's due to my futzing around with the CSS class names and variable names. Should be all figured out now.
 * Now the default class constructor includes the calculation of the current time from the `_date` member variable. 
 * Saving a few things for later: namely, how the popups will look. 
+
+### June 22, 2022
+* Mostly done... I wanted to some more with it but I think I've learned what I needed to learn to move on. I will return to this at some point to polish it a bit if needed. 

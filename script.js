@@ -1,6 +1,9 @@
 'use strict';
 
 //____________________________ELEMENTS
+const walk = 'walk';
+const hike = 'hike';
+
 
 class Workout {
     _date = new Date();
@@ -88,13 +91,36 @@ class App {
     #map;
     #mapEvent;
     #workouts = [];
+    #zoomLevel = 15;
     currCords = [];
 
     constructor() {
         this._getPosition();
 
         form.addEventListener('submit', this._newWorkout.bind(this));
+        inputType.addEventListener('change', this._toggleElevationField);
+
+        // containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     }
+
+    _moveToPopup(e) {
+        const workoutEl = e.target.closest('.workout');
+        // console.log(workoutEl);
+        if (!workoutEl) return;
+
+        const workout = this.#workouts.find(
+            work => work._id === workoutEl.dataset.id
+        );
+        this.#map.setView(workout._coords, this.#zoomLevel, {
+            animate: true,
+            pan: {
+                duration: 1,
+            },
+        });
+    }
+
+
+
 
     _getPosition() {
         if (navigator.geolocation)
@@ -107,13 +133,13 @@ class App {
     }
 
     _loadMap(position) {
-        const zoomLevel = 15;
+
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         // console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
         const URL = `https://www.google.com/maps/@${latitude},${longitude}`;
         const coords = [latitude, longitude];
-        this.#map = L.map('map').setView(coords, zoomLevel);
+        this.#map = L.map('map').setView(coords, this.#zoomLevel);
 
         L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -180,13 +206,14 @@ class App {
 
             workout = new Running([lat, lng], distance, duration, cadence);
 
-        } else if (type === 'cycling') {
-            const elevation = +inputElevation;
+        }
+
+        if (type === 'cycling') {
+            const elevation = +inputElevation.value;
             if (!validInputs(distance, duration, elevation) ||
-                !allPositive(distance, duration)) {
-                alert('inputs must be positive numbers');
-                return;
-            }
+                !allPositive(distance, duration))
+                return alert('Inputs have to be positive numbers!');
+
             workout = new Cycling([lat, lng], distance, duration, elevation);
         }
         // add new object to work out array
